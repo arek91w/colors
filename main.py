@@ -50,7 +50,11 @@ class Color():
         max_v = max(r, g, b)
         min_v = min(r, g, b)
         if r >= g and r >= b:
-            hue = (g-b)/(max_v-min_v)
+            try:
+                hue = (g-b)/(max_v-min_v)
+            except:
+                hue = 2.1
+                print('nie dziel przez zero')
         elif g > r and g >= b:
             hue = 2.0 + (b-r)/(max_v-min_v)
         else:
@@ -69,7 +73,7 @@ class Color():
         max_v = max(r, g, b)
         min_v = min(r, g, b)
 
-        return max_v - min_v
+        return mean([max_v, min_v])
 
     def rgb_to_sat(self, r, g, b):
         
@@ -85,6 +89,7 @@ class Color():
             return (max_v - min_v) / (2 - max_v - min_v)
 
     def rgba_to_hex(self, r, g, b , a):
+
         r_hex = hex(int(r))
         g_hex = hex(int(g))
         b_hex = hex(int(b))
@@ -116,25 +121,101 @@ for col in first_format_colors:
     blues.append(int(blue, 16))
     alphas.append(int(alpha, 16))
 
-print(f"RED: {int(round(mean(reds), 0))}")
-print(f"GREEN: {int(round(mean(greens), 0))}")
-print(f"BLUE: {int(round(mean(blues), 0))}")
-print(f"ALPHA: {int(round(mean(alphas), 0))}")
-
-hex = my_col.rgba_to_hex(round(mean(reds), 0), round(mean(greens), 0), round(mean(blues), 0), round(mean(alphas), 0))
-
-print(f"HEX: {hex}")
 '''
-hue = my_col.rgb_to_hue(int(red, 16), int(green, 16), int(blue, 16))
-ligh = my_col.rgb_to_lightness(int(red, 16), int(green, 16), int(blue, 16))
-sat = my_col.rgb_to_sat(int(red, 16), int(green, 16), int(blue, 16))
+red_mean = int(round(mean(reds), 0))
+green_mean = int(round(mean(greens), 0))
+blue_mean = int(round(mean(blues), 0))
+alpha_mean = int(round(mean(alphas), 0))
+
+print(f"RED: {red_mean}")
+print(f"GREEN: {green_mean}")
+print(f"BLUE: {blue_mean}")
+print(f"ALPHA: {alpha_mean}")
+
+hex2 = my_col.rgba_to_hex(red_mean, green_mean, blue_mean, alpha_mean)
+
+print(f"HEX: {hex2}")
+
+hue = my_col.rgb_to_hue(red_mean, green_mean, blue_mean)
+ligh = my_col.rgb_to_lightness(red_mean, green_mean, blue_mean)
+sat = my_col.rgb_to_sat(red_mean, green_mean, blue_mean)
 print(f"HUE: {hue}")
 print(f"SATURATION: {sat}")
 print(f"LIGHTNESS: {ligh}")
 '''
+
 if args.mode == 'mix':
-    print("MIX !!!!!")
+    red_mean = int(round(mean(reds), 0))
+    green_mean = int(round(mean(greens), 0))
+    blue_mean = int(round(mean(blues), 0))
+    alpha_mean = int(round(mean(alphas), 0))
+    hex2 = my_col.rgba_to_hex(red_mean, green_mean, blue_mean, alpha_mean)
+    hue = my_col.rgb_to_hue(red_mean, green_mean, blue_mean)
+    ligh = my_col.rgb_to_lightness(red_mean, green_mean, blue_mean)
+    sat = my_col.rgb_to_sat(red_mean, green_mean, blue_mean)
+
+    print(f"RED: {red_mean}")
+    print(f"GREEN: {green_mean}")
+    print(f"BLUE: {blue_mean}")
+    print(f"ALPHA: {alpha_mean}")
+    print(f"HEX: {hex2}")
+    print(f"HUE: {hue}")
+    print(f"SATURATION: {sat}")
+    print(f"LIGHTNESS: {ligh}")
+
 elif args.mode == 'lowest':
-    print("LOWEST !!!!!")
+    red_low = int(round(min(reds), 0))
+    green_low = int(round(min(greens), 0))
+    blue_low = int(round(min(blues), 0))
+    alpha_low = int(round(min(alphas), 0))
+    hex2 = my_col.rgba_to_hex(red_low, green_low, blue_low, alpha_low)
+    hue = my_col.rgb_to_hue(red_low, green_low, blue_low)
+    ligh = my_col.rgb_to_lightness(red_low, green_low, blue_low)
+    sat = my_col.rgb_to_sat(red_low, green_low, blue_low)
+
+    print(f"RED: {red_low}")
+    print(f"GREEN: {green_low}")
+    print(f"BLUE: {blue_low}")
+    print(f"ALPHA: {alpha_low}")
+    print(f"HEX: {hex2}")
+    print(f"HUE: {hue}")
+    print(f"SATURATION: {sat}")
+    print(f"LIGHTNESS: {ligh}")
+
 elif args.mode == 'highest':
-    print("HIGHEST !!!!!")
+    red_high = int(round(max(reds), 0))
+    green_high = int(round(max(greens), 0))
+    blue_high = int(round(max(blues), 0))
+    alpha_high = int(round(max(alphas), 0))
+    hex2 = my_col.rgba_to_hex(red_high, green_high, blue_high, alpha_high)
+    hue = my_col.rgb_to_hue(red_high, green_high, blue_high)
+    ligh = my_col.rgb_to_lightness(red_high, green_high, blue_high)
+    sat = my_col.rgb_to_sat(red_high, green_high, blue_high)
+
+    print(f"RED: {red_high}")
+    print(f"GREEN: {green_high}")
+    print(f"BLUE: {blue_high}")
+    print(f"ALPHA: {alpha_high}")
+    print(f"HEX: {hex2}")
+    print(f"HUE: {hue}")
+    print(f"SATURATION: {sat}")
+    print(f"LIGHTNESS: {ligh}")
+
+elif args.mode == 'mix-saturate':
+    red_high = int(round(max(reds), 0))
+    green_high = int(round(max(greens), 0))
+    blue_high = int(round(max(blues), 0))
+    alpha_high = int(round(max(alphas), 0))
+    hex2 = my_col.rgba_to_hex(red_high, green_high, blue_high, alpha_high)
+    hue = my_col.rgb_to_hue(red_high, green_high, blue_high)
+    ligh = my_col.rgb_to_lightness(red_high, green_high, blue_high)
+    sat = my_col.rgb_to_sat(red_high, green_high, blue_high)
+
+    print(f"RED: {red_high}")
+    print(f"GREEN: {green_high}")
+    print(f"BLUE: {blue_high}")
+    print(f"ALPHA: {alpha_high}")
+    print(f"HEX: {hex2}")
+    print(f"HUE: {hue}")
+    print(f"SATURATION: {sat}")
+    print(f"LIGHTNESS: {ligh}")

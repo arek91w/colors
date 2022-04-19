@@ -1,4 +1,4 @@
-red ff4477ff
-blue ff121314  122,233,121,133 kolorowanie
+red 244477ff
+blue aa121314  122,233,121,133 kolorowanie
 bb0000bb
 zzz 00012
