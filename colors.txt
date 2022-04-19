@@ -1,0 +1,4 @@
+red ff0000ff12
+blue ff121314  122,233,121,133 kolorowanie
+
+zzz 00012
