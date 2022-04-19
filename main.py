@@ -1,4 +1,5 @@
 import argparse
+from statistics import mean
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--mode", help="select mode", type=str)
@@ -83,6 +84,13 @@ class Color():
         else:
             return (max_v - min_v) / (2 - max_v - min_v)
 
+    def rgba_to_hex(self, r, g, b , a):
+        r_hex = hex(int(r))
+        g_hex = hex(int(g))
+        b_hex = hex(int(b))
+        a_hex = hex(int(a))
+
+        return '#' + r_hex[-2:] + g_hex[-2:] + b_hex[-2:] + a_hex[-2:]
 
 my_col = Color()
 file_lines = my_col.load_file()
@@ -90,23 +98,40 @@ file_lines = my_col.load_file()
 
 first_format_colors = my_col.check_first_format(file_lines)
 
+reds = []
+greens = []
+blues = []
+alphas = []
+
 for col in first_format_colors:
+    print(col)
+    print('______________')
     red = col[0:2]
     green = col[2:4]
     blue = col[4:6]
     alpha = col[6:8]
-    print(f"RED: {int(red, 16)}")
-    print(f"GREEN: {int(green, 16)}")
-    print(f"BLUE: {int(blue, 16)}")
-    print(f"ALPHA: {int(alpha, 16)}")
-    print(f"HEX: #{col}")
-    hue = my_col.rgb_to_hue(int(red, 16), int(green, 16), int(blue, 16))
-    ligh = my_col.rgb_to_lightness(int(red, 16), int(green, 16), int(blue, 16))
-    sat = my_col.rgb_to_sat(int(red, 16), int(green, 16), int(blue, 16))
-    print(f"HUE: {hue}")
-    print(f"SATURATION: {sat}")
-    print(f"LIGHTNESS: {ligh}")
 
+    reds.append(int(red, 16))
+    greens.append(int(green, 16))
+    blues.append(int(blue, 16))
+    alphas.append(int(alpha, 16))
+
+print(f"RED: {int(round(mean(reds), 0))}")
+print(f"GREEN: {int(round(mean(greens), 0))}")
+print(f"BLUE: {int(round(mean(blues), 0))}")
+print(f"ALPHA: {int(round(mean(alphas), 0))}")
+
+hex = my_col.rgba_to_hex(round(mean(reds), 0), round(mean(greens), 0), round(mean(blues), 0), round(mean(alphas), 0))
+
+print(f"HEX: {hex}")
+'''
+hue = my_col.rgb_to_hue(int(red, 16), int(green, 16), int(blue, 16))
+ligh = my_col.rgb_to_lightness(int(red, 16), int(green, 16), int(blue, 16))
+sat = my_col.rgb_to_sat(int(red, 16), int(green, 16), int(blue, 16))
+print(f"HUE: {hue}")
+print(f"SATURATION: {sat}")
+print(f"LIGHTNESS: {ligh}")
+'''
 if args.mode == 'mix':
     print("MIX !!!!!")
 elif args.mode == 'lowest':
