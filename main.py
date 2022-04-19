@@ -1,5 +1,4 @@
 import argparse
-from pprint import pprint
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--mode", help="select mode", type=str)
@@ -61,6 +60,29 @@ class Color():
         
         return hue
 
+    def rgb_to_lightness(self, r, g, b):
+        
+        r = int(r)/255
+        g = int(g)/255
+        b = int(b)/255
+        max_v = max(r, g, b)
+        min_v = min(r, g, b)
+
+        return max_v - min_v
+
+    def rgb_to_sat(self, r, g, b):
+        
+        r = int(r)/255
+        g = int(g)/255
+        b = int(b)/255
+        max_v = max(r, g, b)
+        min_v = min(r, g, b)
+
+        if max_v - min_v < 0.5:
+            return (max_v - min_v) / (max_v + min_v)
+        else:
+            return (max_v - min_v) / (2 - max_v - min_v)
+
 
 my_col = Color()
 file_lines = my_col.load_file()
@@ -79,7 +101,11 @@ for col in first_format_colors:
     print(f"ALPHA: {int(alpha, 16)}")
     print(f"HEX: #{col}")
     hue = my_col.rgb_to_hue(int(red, 16), int(green, 16), int(blue, 16))
+    ligh = my_col.rgb_to_lightness(int(red, 16), int(green, 16), int(blue, 16))
+    sat = my_col.rgb_to_sat(int(red, 16), int(green, 16), int(blue, 16))
     print(f"HUE: {hue}")
+    print(f"SATURATION: {sat}")
+    print(f"LIGHTNESS: {ligh}")
 
 if args.mode == 'mix':
     print("MIX !!!!!")
