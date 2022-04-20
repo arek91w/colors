@@ -3,8 +3,12 @@ from statistics import mean
 class Color():
 
     def load_file(self):
-        with open('colors.txt') as f:
-            return f.readlines()
+        try:
+            with open('colors.txt') as f:
+                return f.readlines()
+        except:
+            print('cant read the file')
+            return 'xx'
 
     def check_first_format(self, lines):
         
