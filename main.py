@@ -14,7 +14,7 @@ class Color():
     '''
 
     def load_file(self):
-        with open('colors.txt') as f:
+        with open('colors2.txt') as f:
             return f.readlines()
 
     def check_first_format(self, lines):
@@ -155,11 +155,23 @@ class Color():
     def rgba_to_hex(self, r, g, b , a):
 
         r_hex = hex(int(r))
+        r_hex = r_hex[2:]
+        if len(r_hex) == 1:
+            r_hex = '0' + r_hex
         g_hex = hex(int(g))
+        g_hex = g_hex[2:]
+        if len(g_hex) == 1:
+            g_hex = '0' + g_hex
         b_hex = hex(int(b))
+        b_hex = b_hex[2:]
+        if len(b_hex) == 1:
+            b_hex = '0' + b_hex
         a_hex = hex(int(a))
+        a_hex = a_hex[2:]
+        if len(a_hex) == 1:
+            a_hex = '0' + a_hex
 
-        return '#' + r_hex[-2:] + g_hex[-2:] + b_hex[-2:] + a_hex[-2:]
+        return '#' + r_hex + g_hex + b_hex + a_hex
 
 my_col = Color()
 file_lines = my_col.load_file()
@@ -168,7 +180,18 @@ file_lines = my_col.load_file()
 first_format_colors = my_col.check_first_format(file_lines)
 
 for s in my_col.check_second_format(file_lines):
-    print(s)
+    try:
+        word = ''
+        red = int(s[0])
+        green = int(s[1])
+        blue = int(s[2])
+        alpha = int(s[3])
+        print(f'{red, green, blue, alpha}')
+        col_hex = my_col.rgba_to_hex(red, green, blue, alpha)[1:]
+        print(f'{col_hex}, XXXXXXXXX')
+        first_format_colors.append(col_hex)
+    except:
+        print('invalid format')
 
 reds = []
 greens = []
