@@ -2,6 +2,8 @@ from statistics import mean
 
 class Color():
 
+
+    #loading file
     def load_file(self):
         try:
             with open('colors.txt') as f:
@@ -10,6 +12,7 @@ class Color():
             print('cant read the file')
             return 'xx'
 
+    # function exctracting colors from format e.g #ff002244
     def check_first_format(self, lines):
         
         colors = []
@@ -36,6 +39,7 @@ class Color():
         
         return colors
 
+    # function exctracting colors from format e.g 122,1, 3, 44
     def check_second_format(self, lines):  
         for line in lines:
             comm_arr = [pos for pos, char in enumerate(line) if char == ',']
@@ -77,6 +81,7 @@ class Color():
         else:
             pass
     
+    # filtering second format strings (backward)
     def sort_back(self, s):
         int_set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
         new_s = s[-1]
@@ -86,6 +91,7 @@ class Color():
             new_s = c + new_s
         return new_s
 
+    # filtering second format strings (forward)
     def sort_forw(self, s):
         int_set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
         new_s = s[0]
@@ -95,6 +101,7 @@ class Color():
             new_s = new_s + c
         return new_s
     
+    # converting rgb to hue
     def rgb_to_hue(self, r, g, b):
         r = int(r)/255
         g = int(g)/255
@@ -117,6 +124,7 @@ class Color():
         
         return hue
 
+    # converting rgb to lightness
     def rgb_to_lightness(self, r, g, b):
         
         r = int(r)/255
@@ -127,6 +135,7 @@ class Color():
 
         return mean([max_v, min_v])
 
+    # converting rgb to saturation
     def rgb_to_sat(self, r, g, b):
         
         r = int(r)/255
@@ -140,6 +149,7 @@ class Color():
         else:
             return (max_v - min_v) / (2 - max_v - min_v)
 
+    # converting rgba to hex
     def rgba_to_hex(self, r, g, b , a):
 
         r_hex = hex(int(r))
