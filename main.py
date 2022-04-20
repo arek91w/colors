@@ -64,7 +64,7 @@ class Color():
                     try:
                         if space_arr[0] <= 5 and space_arr[1] <= 5:
                             #print(triple_comb_arr)
-                            if triple_comb_arr[0] > 2:
+                            if triple_comb_arr[0] > 3:
                                 red_v = line[triple_comb_arr[0]-4:triple_comb_arr[0]]
                             else:
                                 red_v = line[0:triple_comb_arr[0]]
