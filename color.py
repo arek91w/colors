@@ -1,12 +1,9 @@
+from statistics import mean
+
 class Color():
 
-    '''
-    def __init__(self):
-        self.lines = []
-    '''
-
     def load_file(self):
-        with open('colors2.txt') as f:
+        with open('colors.txt') as f:
             return f.readlines()
 
     def check_first_format(self, lines):
@@ -38,24 +35,19 @@ class Color():
     def check_second_format(self, lines):  
         for line in lines:
             comm_arr = [pos for pos, char in enumerate(line) if char == ',']
-            print(comm_arr)
             if len(comm_arr) >= 3:
-                print('ok')
 
                 # sprawdz limit odstepow
                 for i in range(len(comm_arr)):
 
                     triple_comb_arr = []
                     for j in range(i, i+3):
-                        #print(str(j)+'ggg')
                         triple_comb_arr.append(comm_arr[j])
-                        #rgba_values.append(line[comm_arr[j]-3:comm_arr[j]])
                         if j == len(comm_arr) - 1:
                             break
                     space_arr = [j-i for i, j in zip(triple_comb_arr[:-1], triple_comb_arr[1:])]
                     try:
                         if space_arr[0] <= 5 and space_arr[1] <= 5:
-                            #print(triple_comb_arr)
                             if triple_comb_arr[0] > 3:
                                 red_v = line[triple_comb_arr[0]-4:triple_comb_arr[0]]
                             else:
@@ -79,7 +71,7 @@ class Color():
                     break
             # sprawdz czy znaki sa liczbami lub spacja
         else:
-            print('brak przecinka')
+            pass
     
     def sort_back(self, s):
         int_set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}

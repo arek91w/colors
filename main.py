@@ -3,7 +3,7 @@ from statistics import mean
 from color import Color
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-m", "--mode", help="select mode", type=str)
+parser.add_argument("-m", "--mode", nargs="?", help="select mode", type=str)
 
 args = parser.parse_args()
 
@@ -20,12 +20,10 @@ for s in my_col.check_second_format(file_lines):
         green = int(s[1])
         blue = int(s[2])
         alpha = int(s[3])
-        print(f'{red, green, blue, alpha}')
         col_hex = my_col.rgba_to_hex(red, green, blue, alpha)[1:]
-        print(f'{col_hex}, XXXXXXXXX')
         first_format_colors.append(col_hex)
     except:
-        print('invalid format')
+        pass
 
 reds = []
 greens = []
@@ -33,8 +31,6 @@ blues = []
 alphas = []
 
 for col in first_format_colors:
-    print(col)
-    print('______________')
     red = col[0:2]
     green = col[2:4]
     blue = col[4:6]
@@ -45,30 +41,9 @@ for col in first_format_colors:
     blues.append(int(blue, 16))
     alphas.append(int(alpha, 16))
 
-'''
-red_mean = int(round(mean(reds), 0))
-green_mean = int(round(mean(greens), 0))
-blue_mean = int(round(mean(blues), 0))
-alpha_mean = int(round(mean(alphas), 0))
+print(args.mode)
 
-print(f"RED: {red_mean}")
-print(f"GREEN: {green_mean}")
-print(f"BLUE: {blue_mean}")
-print(f"ALPHA: {alpha_mean}")
-
-hex2 = my_col.rgba_to_hex(red_mean, green_mean, blue_mean, alpha_mean)
-
-print(f"HEX: {hex2}")
-
-hue = my_col.rgb_to_hue(red_mean, green_mean, blue_mean)
-ligh = my_col.rgb_to_lightness(red_mean, green_mean, blue_mean)
-sat = my_col.rgb_to_sat(red_mean, green_mean, blue_mean)
-print(f"HUE: {hue}")
-print(f"SATURATION: {sat}")
-print(f"LIGHTNESS: {ligh}")
-'''
-
-if args.mode == 'mix':
+if args.mode == 'mix' or args.mode == None:
     red_mean = int(round(mean(reds), 0))
     green_mean = int(round(mean(greens), 0))
     blue_mean = int(round(mean(blues), 0))
@@ -83,9 +58,9 @@ if args.mode == 'mix':
     print(f"BLUE: {blue_mean}")
     print(f"ALPHA: {alpha_mean}")
     print(f"HEX: {hex2}")
-    print(f"HUE: {hue}")
-    print(f"SATURATION: {sat}")
-    print(f"LIGHTNESS: {ligh}")
+    print(f"HUE: {round(hue, 2)}")
+    print(f"SATURATION: {round(sat, 2)}")
+    print(f"LIGHTNESS: {round(ligh, 2)}")
 
 elif args.mode == 'lowest':
     red_low = int(round(min(reds), 0))
@@ -102,9 +77,9 @@ elif args.mode == 'lowest':
     print(f"BLUE: {blue_low}")
     print(f"ALPHA: {alpha_low}")
     print(f"HEX: {hex2}")
-    print(f"HUE: {hue}")
-    print(f"SATURATION: {sat}")
-    print(f"LIGHTNESS: {ligh}")
+    print(f"HUE: {round(hue, 2)}")
+    print(f"SATURATION: {round(sat, 2)}")
+    print(f"LIGHTNESS: {round(ligh, 2)}")
 
 elif args.mode == 'highest':
     red_high = int(round(max(reds), 0))
@@ -121,9 +96,9 @@ elif args.mode == 'highest':
     print(f"BLUE: {blue_high}")
     print(f"ALPHA: {alpha_high}")
     print(f"HEX: {hex2}")
-    print(f"HUE: {hue}")
-    print(f"SATURATION: {sat}")
-    print(f"LIGHTNESS: {ligh}")
+    print(f"HUE: {round(hue, 2)}")
+    print(f"SATURATION: {round(sat, 2)}")
+    print(f"LIGHTNESS: {round(ligh, 2)}")
 
 elif args.mode == 'mix-saturate':
     red_high = int(round(max(reds), 0))
@@ -140,6 +115,6 @@ elif args.mode == 'mix-saturate':
     print(f"BLUE: {blue_high}")
     print(f"ALPHA: {alpha_high}")
     print(f"HEX: {hex2}")
-    print(f"HUE: {hue}")
-    print(f"SATURATION: {sat}")
-    print(f"LIGHTNESS: {ligh}")
+    print(f"HUE: {round(hue, 2)}")
+    print(f"SATURATION: {round(sat, 2)}")
+    print(f"LIGHTNESS: {round(ligh, 2)}")
