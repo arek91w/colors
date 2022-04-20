@@ -42,6 +42,70 @@ class Color():
                         colors.append(col_value)
         
         return colors
+
+    def check_second_format(self, lines):  
+        for line in lines:
+            comm_arr = [pos for pos, char in enumerate(line) if char == ',']
+            print(comm_arr)
+            if len(comm_arr) >= 3:
+                print('ok')
+
+                # sprawdz limit odstepow
+                for i in range(len(comm_arr)):
+
+                    triple_comb_arr = []
+                    for j in range(i, i+3):
+                        #print(str(j)+'ggg')
+                        triple_comb_arr.append(comm_arr[j])
+                        #rgba_values.append(line[comm_arr[j]-3:comm_arr[j]])
+                        if j == len(comm_arr) - 1:
+                            break
+                    space_arr = [j-i for i, j in zip(triple_comb_arr[:-1], triple_comb_arr[1:])]
+                    try:
+                        if space_arr[0] <= 5 and space_arr[1] <= 5:
+                            #print(triple_comb_arr)
+                            if triple_comb_arr[0] > 2:
+                                red_v = line[triple_comb_arr[0]-4:triple_comb_arr[0]]
+                            else:
+                                red_v = line[0:triple_comb_arr[0]]
+                            green_v = line[triple_comb_arr[1]-3:triple_comb_arr[1]]
+                            blue_v = line[triple_comb_arr[2]-3:triple_comb_arr[2]]
+                            alpha_v = line[triple_comb_arr[2]+1:triple_comb_arr[2]+5]
+                            red_v = self.sort_back(red_v)
+                            green_v = self.sort_back(green_v)
+                            blue_v = self.sort_back(blue_v)
+                            alpha_v = self.sort_forw(alpha_v)
+                            rgba = (red_v, green_v, blue_v, alpha_v)
+                            yield rgba
+                    except:
+                        rgba = None
+                        yield rgba
+                
+
+
+                if i == len(comm_arr) - 3:
+                    break
+            # sprawdz czy znaki sa liczbami lub spacja
+        else:
+            print('brak przecinka')
+    
+    def sort_back(self, s):
+        int_set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+        new_s = s[-1]
+        for c in reversed(s[:-1]):
+            if c not in int_set:
+                break
+            new_s = c + new_s
+        return new_s
+
+    def sort_forw(self, s):
+        int_set = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+        new_s = s[0]
+        for c in (s[1:]):
+            if c not in int_set:
+                break
+            new_s = new_s + c
+        return new_s
     
     def rgb_to_hue(self, r, g, b):
         r = int(r)/255
@@ -102,6 +166,9 @@ file_lines = my_col.load_file()
 
 
 first_format_colors = my_col.check_first_format(file_lines)
+
+for s in my_col.check_second_format(file_lines):
+    print(s)
 
 reds = []
 greens = []
